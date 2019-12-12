@@ -1,5 +1,9 @@
-const gulp       = require('gulp');
-const requireDir = require('require-dir');
+const { defaultTask } = require('./gulp/tasks/default');
+const { lintSass } = require('./gulp/tasks/lint');
+const { buildProd } = require('./gulp/tasks/build');
+const { clean } = require('./gulp/tasks/clean');
 
-// Require all tasks in gulp/tasks, including subfolders
-requireDir('./gulp/tasks', {recurse: true});
+exports.default = defaultTask;
+exports.lintSass = lintSass;
+exports.buildProd = buildProd;
+exports.clean = clean;

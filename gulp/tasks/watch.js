@@ -1,8 +1,17 @@
-const gulp   = require("gulp");
-const config = require("../config");
+const { watch, series, parallel } = require('gulp');
+const config = require('../config');
+const { sass } = require('./sass');
+const { babel } = require('./babel');
 
-gulp.task("watch", [
-    "copy:watch",
-    "style:watch",
-    "js-uglify:watch"
-]);
+const watchTask = () => {
+  watch(
+    [
+      config.src.sass + '/**/*.{sass,scss}',
+      config.src.js + '/**/*.js',
+      config.src.twig,
+    ],
+    series(parallel(sass, babel))
+  );
+};
+
+exports.watchTask = watchTask;

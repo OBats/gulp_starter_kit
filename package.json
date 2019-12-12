@@ -1,62 +1,42 @@
 {
-  "name": "StarterKit",
-  "version": "0.1.0",
-  "private": true,
+  "name": "gulp_starter_kit",
+  "author": "OBats",
   "description": "Gulp Starter Kit",
-  "author": "Orest Bats <orest.bats@gmail.com>",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/OBats/device.git"
-  },
-  "scripts": {
-    "build": "gulp build",
-    "deploy": "gulp deploy",
-    "test": "stylelint \"src/sass/**/*.scss\" --syntax=scss & gulp lint-html",
-    "precommit": "lint-staged"
-  },
-  "lint-staged": {
-    "linters": {
-      "*.scss": "stylelint"
-    }
+    "url": "https://github.com/OBats/gulp_starter_kit"
   },
   "devDependencies": {
-    "ansi-colors": "^3.0.5",
-    "autoprefixer": "^9.1.5",
-    "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0",
-    "browser-sync": "^2.24.7",
-    "css-mqpacker": "^7.0.0",
-    "del": "^3.0.0",
-    "fancy-log": "^1.3.2",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^8.0.0",
-    "gulp-cli": "^2.0.1",
-    "gulp-csso": "^3.0.1",
-    "gulp-gh-pages": "^0.5.4",
-    "gulp-htmlhint": "^2.1.1",
-    "gulp-imagemin": "^4.1.0",
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "@lipemat/css-mqpacker": "^8.0.1",
+    "ansi-colors": "^4.1.1",
+    "autoprefixer": "^9.7.1",
+    "babel-loader": "^8.0.6",
+    "browser-sync": "^2.26.7",
+    "del": "^2.2.2",
+    "fancy-log": "^1.3.3",
+    "gulp": "^4.0.2",
+    "gulp-csso": "^4.0.0",
+    "gulp-if": "^3.0.0",
     "gulp-notify": "^3.2.0",
-    "gulp-plumber": "^1.2.0",
     "gulp-postcss": "^8.0.0",
     "gulp-rename": "^1.4.0",
-    "gulp-sass": "^4.0.1",
-    "gulp-sequence": "^1.0.0",
-    "gulp-sourcemaps": "^2.6.4",
-    "gulp-svgmin": "^2.0.0",
-    "gulp-svgstore": "^7.0.0",
-    "gulp-uglify": "^3.0.1",
-    "husky": "^0.14.3",
-    "lint-staged": "^7.2.2",
+    "gulp-sass": "^4.0.2",
+    "gulp-sass-lint": "^1.4.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
     "minimist": "^1.2.0",
-    "pixel-glass": "^1.0.13",
-    "pump": "^3.0.0",
-    "remove-svg-properties": "^0.3.3",
-    "require-dir": "^1.0.0",
-    "stylelint": "^9.5.0",
-    "stylelint-config-standard": "^18.2.0",
-    "stylelint-scss": "^3.3.0"
+    "sass-lint": "^1.7.0",
+    "sort-css-media-queries": "^1.4.3",
+    "webpack-stream": "^5.2.1"
   },
   "engines": {
-    "node": ">=8.11"
+    "node": ">=10"
+  },
+  "private": true,
+  "scripts": {
+    "lint": "gulp lintSass"
   }
 }

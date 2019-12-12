@@ -1,17 +1,17 @@
-const gulp   = require("gulp");
-const server = require("browser-sync").create();
-const config = require("../config");
+const bs = require('browser-sync').create();
+const config = require('../config');
 
-gulp.task("server", function() {
-  server.init({
-    server: config.src.root,
-    notify: false,
-    open: true,
+const server = cb => {
+  bs.init({
     cors: true,
-    ui: false
+    notify: false,
+    ui: false,
+    files: [config.dest.css + '/*.css', config.dest.js + '/*.js'],
+    proxy: {
+      target: config.proxyServer,
+    },
   });
+  cb();
+};
 
-  gulp.watch(config.src.root + "/*.html").on("change", server.reload);
-});
-
-module.exports = server;
+exports.server = server;

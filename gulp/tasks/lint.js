@@ -1,9 +1,16 @@
-const gulp     = require("gulp");
-const htmlhint = require("gulp-htmlhint");
-const config   = require("../config");
+const { src } = require('gulp');
+const config = require('../config');
+const sassLint = require('gulp-sass-lint');
 
-gulp.task("lint-html", function() {
-  gulp.src(config.src.root + "/*.html")
-    .pipe(htmlhint(".htmlhintrc"))
-    .pipe(htmlhint.reporter())
-})
+const lintSass = () => {
+  return src(config.src.sass + '/**/*.{sass,scss}')
+    .pipe(
+      sassLint({
+        configFile: '.sass-lint.yml',
+      })
+    )
+    .pipe(sassLint.format())
+    .pipe(sassLint.failOnError());
+};
+
+exports.lintSass = lintSass;

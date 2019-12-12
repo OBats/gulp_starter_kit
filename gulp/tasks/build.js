@@ -1,27 +1,14 @@
-const gulp         = require("gulp");
-const gulpSequence = require("gulp-sequence");
-const config       = require("../config");
+const { series, parallel } = require('gulp');
+const { sass } = require('./sass');
+const { babel } = require('./babel');
+const { clean } = require('./clean');
+const { lintSass } = require('./lint');
+const { setProdMode, setDevMode } = require('../utils/setMode');
 
-function build(cb) {
-    gulpSequence(
-        "clean",
-        config.production ? "sass" : "sass:dev",
-        "js-uglify",
-        config.production ? "copy" : "",
-        config.production ? "imagemin" : "",
-        "svg",
-        cb
-    );
-}
+const buildProd = series(setProdMode, clean, lintSass, parallel(sass, babel));
+const buildDev = series(setDevMode, clean, parallel(sass, babel));
 
-gulp.task("build", function(cb) {
-    config.setEnv("production");
-    config.logEnv();
-    build(cb);
-});
-
-gulp.task("build:dev", function(cb) {
-    config.setEnv("development");
-    config.logEnv();
-    build(cb);
-});
+module.exports = {
+  buildProd,
+  buildDev,
+};

@@ -1,12 +1,6 @@
-const gulp         = require("gulp");
-const gulpSequence = require("gulp-sequence");
-const config       = require("../config");
+const { series } = require('gulp');
+const { buildDev } = require('./build');
+const { server } = require('./server');
+const { watchTask } = require('./watch');
 
-gulp.task("default", function(cb) {
-    gulpSequence(
-        "build:dev",
-        "watch",
-        "server",
-        cb
-    );
-});
+exports.defaultTask = series(buildDev, server, watchTask);

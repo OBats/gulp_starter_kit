@@ -1,52 +1,35 @@
-const gulp         = require("gulp");
-const autoprefixer = require("autoprefixer");
-const csso         = require("gulp-csso");
-const mqpacker     = require("css-mqpacker");
-const plumber      = require("gulp-plumber");
-const postcss      = require("gulp-postcss");
-const rename       = require("gulp-rename");
-const sass         = require("gulp-sass");
-const sourcemaps   = require("gulp-sourcemaps");
-const config       = require("../config");
-const server       = require("./server");
+const { src, dest } = require('gulp');
+const autoprefixer = require('autoprefixer');
+const csso = require('gulp-csso');
+const gulpIf = require('gulp-if');
+const gulpSass = require('gulp-sass');
+const mqpacker = require('@lipemat/css-mqpacker');
+const postcss = require('gulp-postcss');
+const rename = require('gulp-rename');
+const sortCSSmq = require('sort-css-media-queries');
+const sourcemaps = require('gulp-sourcemaps');
+const config = require('../config');
 
 const processors = [
-    autoprefixer({
-        browsers: ["last 2 versions"]
-    }),
-    mqpacker({
-        sort: false
-    })
+  autoprefixer({
+    overrideBrowserslist: ['last 2 versions'],
+    cascade: false,
+  }),
+  mqpacker({
+    sort: sortCSSmq.desktopFirst,
+  }),
 ];
 
-gulp.task("sass", function() {
-    return gulp
-        .src(config.src.sass + "/style.scss")
-        .pipe(sass())
-        .pipe(postcss(processors))
-        .pipe(csso())
-        .pipe(rename("style.min.css"))
-        .pipe(gulp.dest(config.dest.css))
-});
+const sass = () => {
+  return src(config.src.sass + '/main.scss')
+    .pipe(gulpIf(!config.production, sourcemaps.init()))
+    .pipe(gulpSass())
+    .on('error', config.errorHandler)
+    .pipe(postcss(processors))
+    .pipe(csso())
+    .pipe(rename('style.min.css'))
+    .pipe(gulpIf(!config.production, sourcemaps.write('./')))
+    .pipe(dest(config.dest.css));
+};
 
-gulp.task("sass:dev", function() {
-    return gulp
-        .src(config.src.sass + "/style.scss")
-        .pipe(sourcemaps.init())
-        .pipe(sass())
-        .on('error', config.errorHandler)
-        .pipe(postcss(processors))
-        .pipe(gulp.dest(
-          config.production ? config.dest.css : config.src.css
-        ))
-        .pipe(csso())
-        .pipe(rename("style.min.css"))
-        .pipe(sourcemaps.write("./"))
-        .pipe(gulp.dest(
-          config.production ? config.dest.css : config.src.css))
-        .pipe(server.stream())
-});
-
-gulp.task("style:watch", function () {
-  gulp.watch(config.src.sass + "/**/*.{scss,sass}", ["sass:dev"]);
-});
+exports.sass = sass;
