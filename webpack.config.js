@@ -10,9 +10,14 @@ const createConfig = (env = process.env.NODE_ENV) => {
     entry: glob.sync(path.resolve(__dirname, config.src.js, '**/*.js')),
     output: {
       path: path.resolve(__dirname, config.dest.js),
-      filename: 'index.js',
+      filename: '[name].js',
     },
     devtool: isProduction ? '' : '#cheap-module-eval-source-map',
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+      },
+    },
     module: {
       rules: [
         {
