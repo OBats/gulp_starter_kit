@@ -1,1 +1,1 @@
-import './prescriber-guide.js';
+console.log(`I'm there`);

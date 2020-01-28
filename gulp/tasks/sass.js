@@ -4,6 +4,7 @@ const csso = require('gulp-csso');
 const gulpIf = require('gulp-if');
 const gulpSass = require('gulp-sass');
 const mqpacker = require('@lipemat/css-mqpacker');
+const path = require('path');
 const postcss = require('gulp-postcss');
 const rename = require('gulp-rename');
 const sortCSSmq = require('sort-css-media-queries');
@@ -12,7 +13,6 @@ const config = require('../config');
 
 const processors = [
   autoprefixer({
-    overrideBrowserslist: ['last 2 versions'],
     cascade: false,
   }),
   mqpacker({
@@ -23,7 +23,9 @@ const processors = [
 const sass = () => {
   return src(config.src.sass + '/main.scss')
     .pipe(gulpIf(!config.production, sourcemaps.init()))
-    .pipe(gulpSass())
+    .pipe(
+      gulpSass({ includePaths: path.join(__dirname, '../../node_modules') })
+    )
     .on('error', config.errorHandler)
     .pipe(postcss(processors))
     .pipe(csso())
