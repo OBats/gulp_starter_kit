@@ -1,15 +1,16 @@
 {
-  "name": "gulp_starter_kit",
+  "name": "gulp-starter-kit",
   "author": "OBats",
-  "description": "Gulp Starter Kit",
-  "version": "1.0.0",
+  "description": "Gulp environment to build project.",
+  "version": "2.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/OBats/gulp_starter_kit"
   },
+  "private": true,
   "devDependencies": {
-    "@babel/core": "^7.7.2",
-    "@babel/preset-env": "^7.7.1",
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
     "@lipemat/css-mqpacker": "^8.0.1",
     "ansi-colors": "^4.1.1",
     "autoprefixer": "^9.7.1",
@@ -35,8 +36,15 @@
   "engines": {
     "node": ">=10"
   },
-  "private": true,
   "scripts": {
     "lint": "gulp lintSass"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "dependencies": {
+    "core-js": "^3.6.4"
   }
 }

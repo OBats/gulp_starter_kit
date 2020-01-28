@@ -5,11 +5,7 @@ const { babel } = require('./babel');
 
 const watchTask = () => {
   watch(
-    [
-      config.src.sass + '/**/*.{sass,scss}',
-      config.src.js + '/**/*.js',
-      config.src.twig,
-    ],
+    [config.src.sass + '/**/*.{sass,scss}', config.src.js + '/**/*.js'],
     series(parallel(sass, babel))
   );
 };
